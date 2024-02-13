@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mole Hole</title>
+    <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="moleHole.js"></script>
+    <link rel="stylesheet" href="moleHole.css"/>
+</head>
+<body>
+<fieldset>
+    <button type="button" onclick="startGame()">Start game</button>
+    <button type="button" onclick="stopGame()">Stop game</button>
+    <label for="score" style="margin-left: 30px">Score:</label>
+    <input type="text" id="score" disabled/>
+</fieldset>
+<table>
+    <tr>
+        <td id="cell_1_1"></td>
+        <td id="cell_1_2"></td>
+    </tr>
+    <tr>
+        <td id="cell_2_1"></td>
+        <td id="cell_2_2"></td>
+    </tr>
+</table>
+
+</body>
+</html>

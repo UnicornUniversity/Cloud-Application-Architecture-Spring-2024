@@ -1,0 +1,19 @@
+section{
+    background: aqua;
+    font-size: 32px;
+}
+
+*{
+    color:white;
+}
+
+.my-decorated-section{
+    background: blue;
+    font-weight: bold;
+}
+
+#my-section{
+    font-size: 16px;
+    font-weight: lighter;
+}
+
