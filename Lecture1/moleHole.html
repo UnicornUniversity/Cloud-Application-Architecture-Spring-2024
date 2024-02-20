@@ -13,6 +13,12 @@
     <button type="button" onclick="stopGame()">Stop game</button>
     <label for="score" style="margin-left: 30px">Score:</label>
     <input type="text" id="score" disabled/>
+    <label for="cbDifficulty" style="margin-left: 30px">Difficulty:</label>
+    <select id="cbDifficulty" onchange="changeDifficultyLevel()">
+        <option value="0">Easy</option>
+        <option value="1" selected>Medium</option>
+        <option value="2">Hard</option>
+    </select>
 </fieldset>
 <table>
     <tr>
