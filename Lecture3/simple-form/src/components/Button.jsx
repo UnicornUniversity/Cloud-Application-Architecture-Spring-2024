@@ -1,6 +1,6 @@
 function Button({id, caption, clickHandler, isDisabled}) {
     return (
-        <button type="button"
+        <button type="submit"
                 id={id}
                 onClick={clickHandler}
                 disabled={isDisabled}
