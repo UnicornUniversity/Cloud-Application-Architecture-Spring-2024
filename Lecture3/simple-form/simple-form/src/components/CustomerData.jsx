@@ -23,7 +23,7 @@ function CustomerData() {
                     <TextBox id="address" title="Address"/>
                 </div>
                 <div className="form-group row">
-                    <Button id="myButton" caption="Hello!" clickHandler={hello}/>
+                    <Button id="myButton" caption="Hello!" clickHandler={hello} isDisabled={false}/>
                 </div>
             </fieldset>
         </form>

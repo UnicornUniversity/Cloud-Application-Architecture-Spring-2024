@@ -1,11 +1,10 @@
-function Button({id, caption, clickHandler}){
-    return(
+function Button({id, caption, clickHandler, isDisabled}) {
+    return (
         <button type="button"
                 id={id}
                 onClick={clickHandler}
-                className="btn btn-primary"
-
-        >
+                disabled={isDisabled}
+                className="btn btn-primary">
             {caption}
         </button>
 
