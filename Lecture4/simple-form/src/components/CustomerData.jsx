@@ -3,6 +3,7 @@ import Button from "./Button";
 import "./CustomerData.css"
 import {useState} from "react";
 import Card from "./Card";
+import {Map} from 'react-mapycz'
 
 
 function CustomerData() {
@@ -13,6 +14,7 @@ function CustomerData() {
     const [addressValue, setAddressValue] = useState("");
     const [helloValue, setHelloValue] = useState("");
     const [errorValue, setErrorValue] = useState("");
+    const [centerMap, setCenterMap] = useState({});
 
     function nameFieldChangeHandler(e) {
         const name = e.target.value;
@@ -35,6 +37,8 @@ function CustomerData() {
         const isValid = nameValue != null && nameValue.length > 0;
         if (!isValid) return;
         //sent to server
+
+        /*
         fetch("http://localhost:3001/customer",
             {
                 method: "POST",
@@ -50,8 +54,28 @@ function CustomerData() {
                 setHelloValue(parsedJson.hello);
                 setErrorValue("");
             }
+        });
 
+        */
 
+        fetch("http://localhost:3001/map",
+            {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({name: nameValue, address: addressValue})
+            }
+        ).then((res) => res.json()).then((parsedJson) => {
+            if (parsedJson.errorString.length > 0) {
+                setErrorValue(parsedJson.errorString);
+            } else {
+                if (parsedJson.places.length > 0) {
+                    console.log("places count=" + parsedJson.places.length);
+                    const firstPlace = parsedJson.places[0];
+                    setCenterMap({lat: firstPlace.position.lat, lng: firstPlace.position.lon});
+                } else {
+                    setErrorValue("No places found");
+                }
+            }
         });
 
     }
@@ -69,7 +93,7 @@ function CustomerData() {
                     <TextBox id="address" title="Address" changeHandler={addressFieldChangeHandler}/>
                 </div>
                 <div className="form-group row row-margin">
-                    <Button id="submitButton" caption="Save" isDisabled={!canSubmit}/>
+                    <Button id="submitButton" caption="Show Map" isDisabled={!canSubmit}/>
                 </div>
                 <div className="form-group row row-margin">
                     {
@@ -78,6 +102,9 @@ function CustomerData() {
                     {
                         errorValue.length > 0 && <Card text={errorValue} mode="1"/>
                     }
+                </div>
+                <div>
+                    <Map center={centerMap}/>
                 </div>
             </fieldset>
         </form>

@@ -1,5 +1,30 @@
 const http = require("http");
 
+const mapyCzApiKey = "bfIE-eF79D-1vG9j5I9JPEj0r-LS3v-EgqFNPRgTb9Y";
+
+async function executeGeocoding(apiKey, address){
+    let errorString = "";
+    const places = [];
+    const url = "https://api.mapy.cz/v1/geocode?query=" + address + "&apikey=" + apiKey;
+    console.log("url=" + url);
+    await fetch(url,
+        {
+            method: "GET"
+        }
+    ).then((res) => res.json()).then((parsedJson) => {
+        console.log(parsedJson)
+        for(let i = 0; i < parsedJson.items.length; i++){
+            const item = parsedJson.items[i];
+            places.push({"name" : item.name, "position": item.position});
+        }
+    }, (reason) => {
+        console.log("reason=" + reason);
+        errorString = reason.message;
+    });
+
+    return JSON.stringify({"places": places, "errorString": errorString});
+}
+
 const server
     = http.createServer((req, res) => {
         console.log(req.url);
@@ -43,6 +68,30 @@ const server
                         jsonState = {errorString: error.message};
                     }
                     const jsonOutput = JSON.stringify({...jsonState, ...jsonHello});
+                    console.log("JSON OUTPUT: " + jsonOutput);
+                    return res.end(jsonOutput);
+                }
+            );
+        }else if (req.url === "/map" && req.method === "POST") {
+            console.log("This is MAP");
+            const allPieces = [];
+            let jsonOutput = "";
+            req.on("data", (piece) => {
+                allPieces.push(piece);
+            });
+            req.on("end", async () => {
+                    res.setHeader("Content-Type", "application/json");
+                    let jsonState = {errorString: ""};
+                    try {
+                        const body = Buffer.concat(allPieces);
+                        const customer = JSON.parse(body.toString());
+                        console.log("address: " + customer.address);
+                        await executeGeocoding(mapyCzApiKey, customer.address).then((output) => jsonOutput = output);
+                    } catch (error) {
+                        console.log(error);
+                        jsonState = {errorString: error.message};
+                    }
+                    //const jsonOutput = JSON.stringify({...jsonState, ...jsonCoords});
                     console.log("JSON OUTPUT: " + jsonOutput);
                     return res.end(jsonOutput);
                 }
