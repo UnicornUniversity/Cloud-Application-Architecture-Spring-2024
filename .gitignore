@@ -2,3 +2,4 @@
 *.iml
 .idea/modules.xml
 .idea/vcs.xml
+/Lecture5/my-school-backend/node_modules
