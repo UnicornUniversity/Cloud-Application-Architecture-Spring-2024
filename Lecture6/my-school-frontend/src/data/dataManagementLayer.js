@@ -15,3 +15,5 @@ async function readClasses() {
     const data = await fetchRoutines("classes/listWithDetails");
     return data.items;
 }
+
+module.exports.readClasses = readClasses;
