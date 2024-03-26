@@ -1,7 +1,7 @@
 import ClassCard from "./ClassCard";
 import {useEffect, useState} from "react";
 
-const dml = require("../data/dataManagementLayer");
+const dml = require("../../data/dataManagementLayer");
 
 export default function Classes() {
     const [classesData, setClassesData] = useState([]);

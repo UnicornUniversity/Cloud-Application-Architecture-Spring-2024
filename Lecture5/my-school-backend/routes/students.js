@@ -1,5 +1,6 @@
 const express = require("express");
 const dml = require("../data/dataManagementLayer");
+const studentHelper  = require("../helpers/studentsHelper");
 
 const router = express.Router();
 
@@ -20,6 +21,12 @@ router.get("/test", async (req, res, next) => {
     res.json({test: "test"});
 });
 
+router.get("/class/:id", async (req, res, next) => {
+    const idClass = parseInt(req.params.id);
+    const allStudents = await dml.readStudents();
+    const studentsByClass = studentHelper.getStudentsForClass(allStudents, idClass);
+    res.json(studentsByClass);
+});
 
 
 module.exports = router;

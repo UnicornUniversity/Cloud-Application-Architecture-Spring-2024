@@ -1,9 +1,9 @@
 import './App.css';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import MainLayout from "./components/MainLayout";
-import Classes from "./components/Classes";
-import Reports from "./components/Reports";
-import Students from "./components/Students";
+import Classes from "./components/classes/Classes";
+import Reports from "./components/reports/Reports";
+import Students from "./components/students/Students";
 
 const router = createBrowserRouter(
     [
